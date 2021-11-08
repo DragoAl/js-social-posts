@@ -62,8 +62,6 @@ const arrPost = [
         'immagine' : "",
         'likes' : 65
     }
-
-
 ];
 
 
@@ -142,12 +140,8 @@ for (let i = 0; i < arrPost.length; i++) {
             </div>            
         </div>`
     }
-    
-   
-    
-
-    
 }
+
 // ESSENDOCI PIU' BOTTONI DEVO RICHIAMARE UN ARRAY DEI BTN
 let likeButtons  = document.querySelectorAll(".like-button");
 console.log(likeButtons);
@@ -159,49 +153,21 @@ for( let i = 0; i < likeButtons.length; i++ ) {
             const index =this.getAttribute('data-postid') ;
             console.log(index);
             let likesCounter = document.querySelectorAll(".likes__counter");
-            let likes = arrPost[index].likes++;
-            console.log(likes);
 
-            likesCounter[i].innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${likes + 1}</b> persone`
-           
-
+            // SE LA CLASSE "LIKED" è GIA' PRESENTA ALLORA DECREMENTA IL COUNTER
+            if (likeButtons[i].className.includes("like-button--liked")) {
+                let likes = arrPost[index].likes--;
+                likesCounter[i].innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${likes - 1}</b> persone`
+                likeButtons[i].classList.remove("like-button--liked");
+                
+                // ALTRIMENTI INCREMENTA IL COUNTER E INSERISCI LA CLASSE "LIKED"
+            } else {
+                let likes = arrPost[index].likes++;
+                likesCounter[i].innerHTML = `Piace a <b id="like-counter-1" class="js-likes-counter">${likes + 1}</b> persone`
+                likeButtons[i].classList.add("like-button--liked");
+            }
+            
         }
     );
 
-}
-
-
-
-function stampa () {
-    addPost = `
-    <div class="post">
-        <div class="post__header">
-            <div class="post-meta">                    
-                <div class="post-meta__icon">
-                    <img class="profile-pic" src="${dataPhotoProfile}" alt="">                    
-                </div>
-                <div class="post-meta__data">
-                    <div class="post-meta__author">${dataName}</div>
-                    <div class="post-meta__time">${dataTime}</div>
-                </div>                    
-            </div>
-        </div>
-        <div class="post__text">${dataText}</div>
-        <div class="post__image">
-            <img src="${dataImg}" alt="">
-        </div>
-        <div class="post__footer">
-            <div class="likes js-likes">
-                <div class="likes__cta">
-                    <a class="like-button  js-like-button" href="#" data-postid="${i}">
-                        <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
-                        <span class="like-button__label">Mi Piace</span>
-                    </a>
-                </div>
-                <div class="likes__counter">
-                    Piace a <b id="like-counter-1" class="js-likes-counter">${dataLikes}</b> persone
-                </div>
-            </div> 
-        </div>            
-    </div>`
 }
